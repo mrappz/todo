@@ -16,14 +16,20 @@ import {crearTodoHtml} from './js/componentes'
 
 export const todoList = new TodoList();
 
-const tarea = new Todo("Aprender JavaScript");
+//Con esto genero los html de todos los todos guardados
+todoList.todos.forEach(todo => crearTodoHtml(todo));
+
+console.log('todos',todoList.todos);
+//Ahora mismo tengo un array de objetos, pero no un array de todos, al recuperar el JSON se crean objetos en lugar de Todos, esto causa que no se pueden usar los métodos de la clase, ya que lo recuperado del JSON no son clases
+
+// const tarea = new Todo("Aprender JavaScript");
 // const tarea2 = new Todo("Comprar un unicornio");
 
-todoList.nuevoTodo(tarea);
+// todoList.nuevoTodo(tarea);
 // todoList.nuevoTodo(tarea2);
-console.log(todoList);
+// console.log(todoList);
 
-crearTodoHtml(tarea);
+// crearTodoHtml(tarea);
 
 //Con esto se crea una nueva entrada en el localStorage (la información no se pierde al cerrar la sesión)
 // localStorage.setItem('clave','valor');
