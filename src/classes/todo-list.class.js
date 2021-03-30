@@ -56,9 +56,6 @@ export class TodoList{
 
         //OJO: Genera un array de objetos, pero no un array de instancias de la clase todo.
 
-
-
-
         // if (localStorage.getItem('todo')){
         //     //Aquí entro si existe el el localStorage la clave 'todo', tengo que traerme el JSON y pasarlo a un array
         //     this.todos = JSON.parse(localStorage.getItem('todo'));
@@ -69,5 +66,15 @@ export class TodoList{
         // }
 
 
+    }
+    //Con esta función devuelvo los pendientes
+    calcularPendientes (){
+        let pendientes = 0;       
+        this.todos.forEach((todo) => {
+            if (!todo.completado){
+                pendientes++;
+            }
+        })        
+        return pendientes;
     }
 }

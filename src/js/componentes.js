@@ -11,6 +11,8 @@ const divTodoList = document.querySelector('.todo-list');
 const txtInput = document.querySelector('.new-todo');
 //Me traigo el botón de eliminar completados
 const btnBorrarCompletados = document.querySelector('.clear-completed');
+//Me traigo la parte donde pongo el número de pendientes que quedan
+const labelPendientes = document.querySelector('strong');
 
 
 export const crearTodoHtml = (todo) =>{
@@ -37,7 +39,6 @@ export const crearTodoHtml = (todo) =>{
   return div.firstElementChild;
 }
 
-
 //Eventos
 txtInput.addEventListener('keyup', (event ) =>{
     if (event.keyCode === 13 && txtInput.value.length > 0){
@@ -49,7 +50,8 @@ txtInput.addEventListener('keyup', (event ) =>{
         crearTodoHtml(nuevoTodo);
         //DEspués de insertarlo limpio el input
         txtInput.value = '';
-    }    
+    }
+    labelPendientes.innerText = todoList.calcularPendientes();
 });
 
 //Aquí lo que hago es controlar cuando hacen click en algún elemento de la lista
@@ -72,6 +74,7 @@ divTodoList.addEventListener('click',(event) =>{
         //Quito del HTML del que he borrado
         divTodoList.removeChild (todoElemento);
     }
+    labelPendientes.innerText = todoList.calcularPendientes();
 });
 
 //En este caso no me hace falta saber nada del evento, solo que se ha hecho click
@@ -90,5 +93,5 @@ btnBorrarCompletados.addEventListener('click', () =>{
         }
 
     }
-
+    labelPendientes.innerText = todoList.calcularPendientes();
 });
