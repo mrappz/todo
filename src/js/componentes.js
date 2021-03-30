@@ -12,7 +12,12 @@ const txtInput = document.querySelector('.new-todo');
 //Me traigo el botón de eliminar completados
 const btnBorrarCompletados = document.querySelector('.clear-completed');
 //Me traigo la parte donde pongo el número de pendientes que quedan
-const labelPendientes = document.querySelector('strong');
+export const labelPendientes = document.querySelector('strong');
+//Me traigo la lista con los botones de los filtros
+const ulFiltros = document.querySelector('.filters');
+//Me traigo los filtros en sí
+const anchorFiltros = document.querySelectorAll('.filtro');
+
 
 
 export const crearTodoHtml = (todo) =>{
@@ -35,6 +40,8 @@ export const crearTodoHtml = (todo) =>{
 
   //Esto se quitará luego, ya que devolveré el HTML del div, en lugar de meter el div meto el primer hijo del div
   divTodoList.append(div.firstElementChild);
+  //Actualizo el número de pendientes
+  labelPendientes.innerText = todoList.calcularPendientes();
 
   return div.firstElementChild;
 }
@@ -94,4 +101,42 @@ btnBorrarCompletados.addEventListener('click', () =>{
 
     }
     labelPendientes.innerText = todoList.calcularPendientes();
+});
+
+ulFiltros.addEventListener('click', (event) =>{
+
+    //Con esto sé qué botón se pulsó
+    const filtro = event.target.text;
+    //Si no pincho en un botón me salgo
+    if (!filtro) {return;};
+
+    //Le quito el recuadro a todos los botones de los filtros
+    anchorFiltros.forEach( anchor => anchor.classList.remove('selected'));
+    //Se lo pongo solo al que estoy pulsando
+    event.target.classList.add('selected');
+
+    //Recorro todos los todos para saber si están completados o no, además, les quito la clase hidden para que se muestren
+    for (const elemento of divTodoList.children)
+    {
+        elemento.classList.remove('hidden');
+        const completado = elemento.classList.contains('completed');
+        //Ahora dependiendo del filtro hago una cosa u otra
+        switch (filtro){
+            case 'Pendientes': 
+                if (completado){
+                    //Oculto los completados con la clase hidden
+                    elemento.classList.add('hidden');
+                }
+                break;
+            case 'Completados': 
+                if (!completado){
+                    //Oculto los completados con la clase hidden
+                    elemento.classList.add('hidden');
+                }
+                break;
+        }
+
+    }
+
+
 });
